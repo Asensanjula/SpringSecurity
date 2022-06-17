@@ -37,7 +37,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .formLogin().loginPage( "/myCustomLogin" ).loginProcessingUrl( "/process-login" )
             .and()
-            .httpBasic();
+            .httpBasic().and().logout();
     }
 
     @Bean
