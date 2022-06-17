@@ -21,8 +21,10 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth.inMemoryAuthentication()
             .withUser( "asen" )
-            .password( "$2a$12$83jnIIaHoqjM6hSJbmPfGOZaAZz3hqtzH3YJ641I2AlKbiAzGOEXO" )
-            .roles( "admin" );
+            .password( "$2a$12$83jnIIaHoqjM6hSJbmPfGOZaAZz3hqtzH3YJ641I2AlKbiAzGOEXO" ).roles( "admin" ) // 123
+            .and()
+            .withUser( "sanjula" )
+            .password( "$2a$12$83jnIIaHoqjM6hSJbmPfGOZaAZz3hqtzH3YJ641I2AlKbiAzGOEXO" ).roles( "user" ); // 123
     }
 
 
@@ -30,10 +32,10 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure( HttpSecurity http ) throws Exception {
 
         http.authorizeRequests()
+            .antMatchers( "/helloWorld").authenticated()
             .antMatchers( "/bye" ).permitAll()
-            .anyRequest()
-            .authenticated().and()
-            .formLogin()
+            .and()
+            .formLogin().loginPage( "/myCustomLogin" ).loginProcessingUrl( "/process-login" )
             .and()
             .httpBasic();
     }
